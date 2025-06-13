@@ -4,7 +4,7 @@ require_once 'util/Conexao.php';
 
 $con = Conexao::getConexao();
 
-// Buscar os carros
+
 $sql = "SELECT * FROM carros";
 $stm = $con->prepare($sql);
 $stm->execute();
