@@ -1,9 +1,27 @@
 <?php
 require_once 'util/Conexao.php';
 
+function traduzirMotor($codigo) {
+    if ($codigo == "E") return "Elétrico";
+    elseif ($codigo == "C") return "Combustão";
+    elseif ($codigo == "H") return "Híbrido";
+    else return "???";
+}
+
+function traduzirCor($codigo) {
+    if ($codigo == "B") return "Branco";
+    elseif ($codigo == "P") return "Preto";
+    elseif ($codigo == "V") return "Vermelho";
+    elseif ($codigo == "A") return "Amarelo";
+    elseif ($codigo == "Z") return "Azul";
+    elseif ($codigo == "E") return "Verde";
+    elseif ($codigo == "C") return "Cinza";
+    elseif ($codigo == "R") return "Rosa";
+    elseif ($codigo == "M") return "Marrom";
+    else return "???";
+}
 
 $con = Conexao::getConexao();
-
 
 $sql = "SELECT * FROM carros";
 $stm = $con->prepare($sql);
@@ -84,28 +102,8 @@ if (isset($_POST["marca"])) {
                 <td><?= $c["id"] ?></td>
                 <td><?= $c["marca"] ?></td>
                 <td><?= $c["modelo"] ?></td>
-                <td>
-                    <?= match ($c["motor"]) {
-                        'E' => "Elétrico",
-                        'C' => "Combustão",
-                        'H' => "Híbrido",
-                        default => "???"
-                    }; ?>
-                </td>
-                <td>
-                    <?= match ($c["cor"]) {
-                        'B' => "Branco",
-                        'P' => "Preto",
-                        'V' => "Vermelho",
-                        'A' => "Amarelo",
-                        'Z' => "Azul",
-                        'E' => "Verde",
-                        'C' => "Cinza",
-                        'R' => "Rosa",
-                        'M' => "Marrom",
-                        default => "???"
-                    }; ?>
-                </td>
+                <td><?= traduzirMotor($c["motor"]) ?></td>
+                <td><?= traduzirCor($c["cor"]) ?></td>
                 <td><?= $c["ano"] ?></td>
                 <td><a href="excluir.php?id=<?= $c['id']; ?>" onclick="return confirm('Confirmar exclusão?')">Excluir</a></td>
             </tr>
